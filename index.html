@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title></title>
     <meta charset="utf-8" />
@@ -7,73 +8,81 @@
 
     <!-- Reference to the Bing Maps SDK -->
     <script type='text/javascript'
-            src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8' 
-            async defer></script>
-    
+        src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'
+        async defer></script>
+
     <script type='text/javascript'>
-    var places = [{"address":{"Date":"01.02.16","City":"Bristol","Country":"UK","Hex":"#00247d"},"latitude":51.45531464,"longitude":-2.59190202},{"address":{"Date":"01.02.16","City":"Oxford","Country":"UK","Hex":"#00247d"},"latitude":51.75374222,"longitude":-1.26346004},{"address":{"Date":"01.04.16","City":"Como","Country":"Italy","Hex":"#009246"},"latitude":45.81203079,"longitude":9.08561516},{"address":{"Date":"01.05.16","City":"Paris","Country":"France","Hex":"#0055a4"},"latitude":48.85689545,"longitude":2.35084891},{"address":{"Date":"01.05.16","City":"Lyon","Country":"France","Hex":"#0055a4"},"latitude":45.76730728,"longitude":4.83430719},{"address":{"Date":"01.06.16","City":"Los Angeles","Country":"USA","Hex":"#bf0a30"},"latitude":34.05223846,"longitude":-118.24334717},{"address":{"Date":"01.06.16","City":"Oxford","Country":"UK","Hex":"#00247d"},"latitude":51.75374222,"longitude":-1.26346004},{"address":{"Date":"01.08.16","City":"Oxford","Country":"UK","Hex":"#00247d"},"latitude":51.75374222,"longitude":-1.26346004},{"address":{"Date":"01.08.16","City":"Bern","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.94800186,"longitude":7.44813108},{"address":{"Date":"01.09.16","City":"Turin","Country":"Italy","Hex":"#009246"},"latitude":45.06837463,"longitude":7.68306589},{"address":{"Date":"01.12.16","City":"Lyon","Country":"France","Hex":"#0055a4"},"latitude":45.76730728,"longitude":4.83430719},{"address":{"Date":"01.02.17","City":"London","Country":"UK","Hex":"#00247d"},"latitude":51.50015259,"longitude":-0.12623601},{"address":{"Date":"01.04.17","City":"Genoa","Country":"Italy","Hex":"#009246"},"latitude":44.40706253,"longitude":8.93398857},{"address":{"Date":"01.06.17","City":"Turin","Country":"Italy","Hex":"#009246"},"latitude":45.06837463,"longitude":7.68306589},{"address":{"Date":"01.06.17","City":"Barcelona","Country":"Spain","Hex":"#c60b1e"},"latitude":41.38299942,"longitude":2.18300009},{"address":{"Date":"01.10.17","City":"Bristol","Country":"UK","Hex":"#00247d"},"latitude":51.45531464,"longitude":-2.59190202},{"address":{"Date":"01.11.17","City":"Turin","Country":"Italy","Hex":"#009246"},"latitude":45.06837463,"longitude":7.68306589},{"address":{"Date":"01.12.17","City":"Cardiff","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.12.17","City":"Lisbon","Country":"Portugal","Hex":"#ff0000"},"latitude":38.70700836,"longitude":-9.1356411},{"address":{"Date":"01.04.18","City":"Toulouse","Country":"France","Hex":"#0055a4"},"latitude":43.6039505,"longitude":1.44450903},{"address":{"Date":"01.05.18","City":"Vilamoura","Country":"Portugal","Hex":"#ff0000"},"latitude":37.07683945,"longitude":-8.11740494},{"address":{"Date":"01.07.18","City":"Cardiff","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.10.18","City":"London","Country":"UK","Hex":"#00247d"},"latitude":51.50015259,"longitude":-0.12623601},{"address":{"Date":"01.11.18","City":"Fribourg","Country":"Switzerla","Hex":"#ff0000"},"latitude":46.81199265,"longitude":7.15277195},{"address":{"Date":"01.12.18","City":"Cardiff","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.12.18","City":"Munich","Country":"Germany","Hex":"#000000"},"latitude":48.13912582,"longitude":11.58021927},{"address":{"Date":"01.02.19","City":"Vienna","Country":"Austria","Hex":"#ed2939"},"latitude":48.2084465,"longitude":16.37789345},{"address":{"Date":"01.03.19","City":"Bern","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.94800186,"longitude":7.44813108},{"address":{"Date":"01.04.19","City":"Toulouse","Country":"France","Hex":"#0055a4"},"latitude":43.6039505,"longitude":1.44450903},{"address":{"Date":"01.04.19","City":"Langland, Wales","Country":"UK","Hex":"#00247d"},"latitude":51.56972885,"longitude":-4.00305223},{"address":{"Date":"01.06.19","City":"Como","Country":"Italy","Hex":"#009246"},"latitude":45.81203079,"longitude":9.08561516},{"address":{"Date":"01.07.19","City":"Wales","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.09.19","City":"Bern","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.94800186,"longitude":7.44813108},{"address":{"Date":"01.10.19","City":"Vilamoura","Country":"Portugal","Hex":"#ff0000"},"latitude":37.07683945,"longitude":-8.11740494},{"address":{"Date":"01.06.20","City":"Grimaud","Country":"France","Hex":"#0055a4"},"latitude":43.27320862,"longitude":6.5201931},{"address":{"Date":"01.08.20","City":"Cardiff","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.09.20","City":"Switzerland","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.80123901,"longitude":8.23096561},{"address":{"Date":"01.01.21","City":"Champery","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.18299866,"longitude":6.8670001},{"address":{"Date":"01.02.21","City":"Lucerne","Country":"Switzerland","Hex":"#ff0000"},"latitude":47.04553986,"longitude":8.30801296},{"address":{"Date":"01.04.21","City":"Colmar","Country":"France","Hex":"#0055a4"},"latitude":48.080616,"longitude":7.35994816},{"address":{"Date":"01.05.21","City":"Arles","Country":"France","Hex":"#0055a4"},"latitude":43.6752739,"longitude":4.62772989},{"address":{"Date":"01.07.21","City":"Vilamoura","Country":"Portugal","Hex":"#ff0000"},"latitude":37.07683945,"longitude":-8.11740494},{"address":{"Date":"01.08.21","City":"Venice","Country":"Italy","Hex":"#009246"},"latitude":45.43460846,"longitude":12.33891296},{"address":{"Date":"01.09.21","City":"Amsterdam","Country":"Netherland","Hex":"#ae1c28"},"latitude":52.37316513,"longitude":4.89065981},{"address":{"Date":"01.01.22","City":"Cardiff","Country":"UK","Hex":"#00247d"},"latitude":51.48130798,"longitude":-3.18049788},{"address":{"Date":"01.02.22","City":"Los Angeles; Santa Barbara; Las Vegas; Joshua Tree ","Country":"USA","Hex":"#bf0a30"},"latitude":36.18934095,"longitude":-115.23130715},{"address":{"Date":"01.04.22","City":"Vilamoura","Country":"Portugal","Hex":"#ff0000"},"latitude":37.07683945,"longitude":-8.11740494},{"address":{"Date":"01.05.22","City":"London","Country":"UK","Hex":"#00247d"},"latitude":51.50015259,"longitude":-0.12623601},{"address":{"Date":"01.07.22","City":"Lugano","Country":"Switzerland","Hex":"#ff0000"},"latitude":46.00360489,"longitude":8.95362377},{"address":{"Date":"01.09.22","City":"Copenhagen","Country":"Denmark","Hex":""},"latitude":55.70446396,"longitude":12.54898167},{"address":{"Date":"01.10.22","City":"San Francisco; Portland; Seattle","Country":"USA","Hex":"#bf0a30"},"latitude":37.78007889,"longitude":-122.42015839},{"address":{"Date":"01.11.22","City":"Bristol","Country":"UK","Hex":"#00247d"},"latitude":51.45531464,"longitude":-2.59190202},{"address":{"Date":"01.02.23","City":"Como","Country":"Italy","Hex":"#009246"},"latitude":45.81203079,"longitude":9.08561516},{"address":{"Date":"01.03.23","City":"Rome","Country":"Italy","Hex":"#009246"},"latitude":41.89055634,"longitude":12.49426746}]
-  
-    function GetMap() {  
-        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {  
-            credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',  
-            zoom: 4  
-        });  
-        
-        var pushpins = [];  
-        var visitedCount = {};  
-        var activeInfobox;
 
-        for (var i = 0; i < places.length; i++) {  
-            var location = new Microsoft.Maps.Location(places[i].latitude+= (Math.random() - 0.5) * 0.010, places[i].longitude+= (Math.random() - 0.5) * 0.010);  
-            var locationData = places[i];  
-            var color = places[i].address.Hex;  
-        
-        
-            var pin = new Microsoft.Maps.Pushpin(location, {  
-            color: color,  
-            anchor: new Microsoft.Maps.Point(12, 39),  
-            title: locationData.address.City
-            });  
-        
-            Microsoft.Maps.Events.addHandler(pin, 'click', (function(locationData) {  
-            return function(e) {  
-                var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {  
-                title: locationData.address.City,  
-                description: 'Date: ' + locationData.address.Date + '<br>Country: ' + locationData.address.Country,  
-                htmlContent: '<div id="textdescription" style="background-color: ' + locationData.address.Hex + '; height: 100px; width: 100px;"> Date: ' + locationData.address.Date + '<br>Country: ' + locationData.address.Country + '</div>',  
-                visible: true  
-                });  
-        
-                if (activeInfobox) {  
-                activeInfobox.setOptions({ visible: false });  
-                }  
-        
-                activeInfobox = infobox;  
-        
-                map.entities.push(infobox);  
-            };  
-            })(locationData));  
-        
-            pushpins.push(pin);  
-        }  
-        
-         //Load the Clustering module.
-         Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
-      
+        fetch('places.json')
+            .then(response => response.json())
+            .then(data => {
+                GetMap(data)
 
-            //Create a ClusterLayer and add it to the map.
-            clusterLayer = new Microsoft.Maps.ClusterLayer(pushpins);
-            map.layers.insert(clusterLayer);
-        });
-    }  
+            })
+            .catch(error => console.error(error));
 
-            
+        function GetMap(places) {
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
+                zoom: 4
+            });
+
+            var pushpins = [];
+            var visitedCount = {};
+            var activeInfobox;
+
+            for (var i = 0; i < places.length; i++) {
+                var location = new Microsoft.Maps.Location(places[i].latitude += (Math.random() - 0.5) * 0.010, places[i].longitude += (Math.random() - 0.5) * 0.010);
+                var locationData = places[i];
+                var color = places[i].countrycolor;
+
+
+                var pin = new Microsoft.Maps.Pushpin(location, {
+                    color: color,
+                    anchor: new Microsoft.Maps.Point(12, 39),
+                    title: locationData.city
+                });
+
+                Microsoft.Maps.Events.addHandler(pin, 'click', (function (locationData) {
+                    return function (e) {
+                        var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {
+                            title: locationData.city,
+                            description: 'Date: ' + locationData.startdate + '<br>Country: ' + locationData.country,
+                            htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '</div>',
+                            visible: true
+                        });
+
+                        if (activeInfobox) {
+                            activeInfobox.setOptions({ visible: false });
+                        }
+
+                        activeInfobox = infobox;
+
+                        map.entities.push(infobox);
+                    };
+                })(locationData));
+
+                pushpins.push(pin);
+            }
+
+            //Load the Clustering module.
+            Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
+
+
+                //Create a ClusterLayer and add it to the map.
+                clusterLayer = new Microsoft.Maps.ClusterLayer(pushpins);
+                map.layers.insert(clusterLayer);
+            });
+        }
+
+
     </script>
 </head>
+
 <body>
     <h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <p>I'm hosted with GitHub Pages.</p>
     <div id="myMap" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
 </body>
-</html>
 
+</html>
