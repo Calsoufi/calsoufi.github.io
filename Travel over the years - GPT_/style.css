@@ -1,0 +1,17 @@
+#textdescription {
+    font-family: Calibri, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #333;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+    shape-outside: circle(); /* set shape to circle */
+    clip-path: circle(); /* set clip path to circle */
+  }
+  
