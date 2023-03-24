@@ -8,20 +8,13 @@
 
     <!-- Reference to the Bing Maps SDK -->
     <script type='text/javascript'
-        src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'
-        async defer></script>
+    src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'
+    async defer></script>
 
-    <script type='text/javascript'>
-
-        fetch('places.json')
-            .then(response => response.json())
-            .then(data => {
-                GetMap(data)
-
-            })
-            .catch(error => console.error(error));
-
-        function GetMap(places) {
+<script type='text/javascript'>
+    fetch('./places.json')
+        .then(response => response.json())
+        .then(data => {
             var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
                 credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
                 zoom: 4
@@ -31,10 +24,10 @@
             var visitedCount = {};
             var activeInfobox;
 
-            for (var i = 0; i < places.length; i++) {
-                var location = new Microsoft.Maps.Location(places[i].latitude += (Math.random() - 0.5) * 0.010, places[i].longitude += (Math.random() - 0.5) * 0.010);
-                var locationData = places[i];
-                var color = places[i].countrycolor;
+            for (var i = 0; i < data.length; i++) {
+                var location = new Microsoft.Maps.Location(data[i].latitude += (Math.random() - 0.5) * 0.010, data[i].longitude += (Math.random() - 0.5) * 0.010);
+                var locationData = data[i];
+                var color = data[i].countrycolor;
 
 
                 var pin = new Microsoft.Maps.Pushpin(location, {
@@ -73,9 +66,8 @@
                 clusterLayer = new Microsoft.Maps.ClusterLayer(pushpins);
                 map.layers.insert(clusterLayer);
             });
-        }
-
-
+        })
+        .catch(error => console.error(error));
     </script>
 </head>
 
