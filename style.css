@@ -170,7 +170,7 @@ body {
   top: 10px;
   left: 10px;
   border: none;
-  background-color: #0078d7;
+  background-color: #000000;
   color: white;
   border-radius: 50%;
   width: 50px;
@@ -181,7 +181,7 @@ body {
 }
 
 .toggle-panel-btn:hover {
-  background-color: #005fa1;
+  background-color: #11d332;
 }
 
 .hidden {

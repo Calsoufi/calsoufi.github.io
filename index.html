@@ -31,10 +31,32 @@
     var map;
 
     function GetMap(places) {
-      map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-        credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
-        zoom: 4
-      });
+
+ // Define a custom map style that hides the road layer
+ var customMapStyle = {
+    elements: {
+      road: {
+        labelColor: "#000000",
+        labelOutlineColor: "#000000",
+        strokeWidth: 0,
+        fillOpacity: 0,
+        visible: false
+      }
+    }
+  };
+  
+  map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+    credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
+    customMapStyle: customMapStyle,
+    showDashboard: false,
+    showMapTypeSelector: false,
+    enableClickableLogo: false,
+    enableSearchLogo: false,
+    disableStreetside: true,
+    disableZooming: false,
+    zoom: 4
+  });
+
 
       var pushpins = [];
       var visitedCount = {};
@@ -58,7 +80,7 @@
             var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {
               title: locationData.city,
               description: 'Date: ' + locationData.startdate + '<br>Country: ' + locationData.country,
-              htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '<br><button class="delete-button" onclick="deleteLocation(\''+locationData.key+'\')"><i class="fas fa-trash"></i></button></div>',
+              htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '<br><button class="delete-button" onclick="deleteLocation(\'' + locationData.key + '\')"><i class="fas fa-trash"></i></button></div>',
               showCloseButton: true,
               maxWidth: 200,
               maxHeight: 200,
@@ -77,6 +99,11 @@
 
         pushpins.push(pin);
       }
+
+      Microsoft.Maps.Events.addHandler(map, 'click', function () {
+        activeInfobox.setOptions({ visible: false });
+      
+      });
 
       //Load the Clustering module.
       Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
@@ -177,7 +204,7 @@
         suggestionDiv.addEventListener('click', function () {
           document.getElementById('hotel-name').value = suggestion.name;
           document.getElementById('city').value = this.getAttribute('data-city') || '';
-            document.getElementById('country').value = this.getAttribute('data-country') || '';
+          document.getElementById('country').value = this.getAttribute('data-country') || '';
           getCoordinatesForHotel(suggestion.name).then(function (data) {
             document.getElementById('latitude').value = data.latitude || '';
             document.getElementById('longitude').value = data.longitude || '';
@@ -196,8 +223,6 @@
 
 
   </script>
-  <h1>Hello World</h1>
-  <p>I'm hosted with GitHub Pages.</p>
   <div id="myMap" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
 
   <button id="toggle-panel-btn" class="toggle-panel-btn">
@@ -236,22 +261,22 @@
       </div>
       <div class="form-group">
         <label for="description"><i class="fas fa-align-left"></i> Description:</label>
-        <textarea id="description" name="description" ></textarea>
+        <textarea id="description" name="description"></textarea>
       </div>
 
       <div class="form-group">
         <label for="amenities"><i class="fas fa-concierge-bell"></i> Amenities:</label>
-        <textarea id="amenities" name="amenities" ></textarea>
+        <textarea id="amenities" name="amenities"></textarea>
       </div>
 
       <div class="form-group">
         <label for="reviews"><i class="fas fa-comments"></i> Reviews:</label>
-        <textarea id="reviews" name="reviews" ></textarea>
+        <textarea id="reviews" name="reviews"></textarea>
       </div>
 
       <div class="form-group">
         <label for="star-rating"><i class="fas fa-star"></i> Star Rating:</label>
-        <input type="number" step="0.1" id="star_rating" name="star_rating" >
+        <input type="number" step="0.1" id="star_rating" name="star_rating">
       </div>
       </br>
       <button type="submit"><i class="fas fa-save"></i> Create</button>
