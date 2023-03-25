@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 import { onValue, query } from 'https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js';
+window.togglePanel = togglePanel;
 
 
      // Your web app's Firebase configuration
@@ -29,11 +30,23 @@ document.getElementById("updateForm").addEventListener("submit", function (e) {
     // Retrieve the input values
     const city = document.getElementById("city").value;
     const startdate = document.getElementById("startdate").value;
+    const description = document.getElementById("description").value;
+    const amenities = document.getElementById("amenities").value;
+    const reviews = document.getElementById("reviews").value;
+    const star_rating = document.getElementById("star_rating").value;
+    const latitude = document.getElementById("latitude").value;
+    const longitude = document.getElementById("longitude").value;
 
     // Create a new object with the input values
     const newPlace = {
-        city: city,
-        startdate: startdate,
+          city: city,
+          startdate: startdate,
+          description: description,
+          amenities: amenities,
+          reviews: reviews,
+          star_rating: star_rating,
+          latitude: latitude,
+          longitude: longitude
         // Add more fields as needed
     };
 
@@ -75,3 +88,13 @@ function fetchAndDisplayData(places) {
     GetMap(places);
   }
   
+  function togglePanel() {
+    var panel = document.querySelector(".hover-panel");
+    var isOpen = panel.style.transform === "scale(1)";
+  
+    if (isOpen) {
+      panel.style.transform = "scale(0)";
+    } else {
+      panel.style.transform = "scale(1)";
+    }
+  }

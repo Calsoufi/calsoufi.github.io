@@ -2,158 +2,262 @@
 <html>
 
 <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script type='text/javascript'>
-        let firebaseData = null;
-    </script>
-        <script type="module" src="main.js"></script>
+  <title></title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type='text/javascript'>
+    let firebaseData = null;
+  </script>
+  <script type="module" src="main.js"></script>
 
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"></script>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js"></script>
 
-    <!-- Firebase Realtime Database -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js"></script>
+  <!-- Firebase Realtime Database -->
+  <script type="module" src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js"></script>
 
-    <!-- Reference to the Bing Maps SDK -->
-    <script type='text/javascript'
-        src='https://www.bing.com/api/maps/mapcontrol?callback=fetchData&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'></script>
+  <!-- Reference to the Bing Maps SDK -->
+  <script type='text/javascript'
+    src='https://www.bing.com/api/maps/mapcontrol?callback=fetchData&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'></script>
 
 
 </head>
 
 <body>
-    <script type='text/javascript'>
+  <script type='text/javascript'>
+    var map;
 
-       
-        function GetMap(places) {
-            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
-                zoom: 4
+    function GetMap(places) {
+      map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+        credentials: 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8',
+        zoom: 4
+      });
+
+      var pushpins = [];
+      var visitedCount = {};
+      var activeInfobox;
+
+
+      for (var i = 0; i < places.length; i++) {
+        var location = new Microsoft.Maps.Location(places[i].latitude += (Math.random() - 0.5) * 0.010, places[i].longitude += (Math.random() - 0.5) * 0.010);
+        var locationData = places[i];
+        var color = places[i].countrycolor;
+
+
+        var pin = new Microsoft.Maps.Pushpin(location, {
+          color: color,
+          anchor: new Microsoft.Maps.Point(12, 39),
+          title: locationData.city
+        });
+
+        Microsoft.Maps.Events.addHandler(pin, 'click', (function (locationData) {
+          return function (e) {
+            var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {
+              title: locationData.city,
+              description: 'Date: ' + locationData.startdate + '<br>Country: ' + locationData.country,
+              htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '</div>',
+              visible: true
             });
 
-            var pushpins = [];
-            var visitedCount = {};
-            var activeInfobox;
-
-            for (var i = 0; i < places.length; i++) {
-                var location = new Microsoft.Maps.Location(places[i].latitude += (Math.random() - 0.5) * 0.010, places[i].longitude += (Math.random() - 0.5) * 0.010);
-                var locationData = places[i];
-                var color = places[i].countrycolor;
-
-
-                var pin = new Microsoft.Maps.Pushpin(location, {
-                    color: color,
-                    anchor: new Microsoft.Maps.Point(12, 39),
-                    title: locationData.city
-                });
-
-                Microsoft.Maps.Events.addHandler(pin, 'click', (function (locationData) {
-                    return function (e) {
-                        var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {
-                            title: locationData.city,
-                            description: 'Date: ' + locationData.startdate + '<br>Country: ' + locationData.country,
-                            htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '</div>',
-                            visible: true
-                        });
-
-                        if (activeInfobox) {
-                            activeInfobox.setOptions({ visible: false });
-                        }
-
-                        activeInfobox = infobox;
-
-                        map.entities.push(infobox);
-                    };
-                })(locationData));
-
-                pushpins.push(pin);
+            if (activeInfobox) {
+              activeInfobox.setOptions({ visible: false });
             }
 
-            //Load the Clustering module.
-            Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
+            activeInfobox = infobox;
+
+            map.entities.push(infobox);
+          };
+        })(locationData));
+
+        pushpins.push(pin);
+      }
+
+      //Load the Clustering module.
+      Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
+        //Create a ClusterLayer and add it to the map.
+        clusterLayer = new Microsoft.Maps.ClusterLayer(pushpins);
+        map.layers.insert(clusterLayer);
+      });
+
+      Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+        // You can now use the search module.
+      });
+
+    }
+    function getHotelNameSuggestions() {
+      var hotelName = document.getElementById('hotel-name').value;
+
+      if (hotelName.length > 0) {
+        var bingMapsKey = 'Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8'; // Replace with your Bing Maps API key
+        var requestUrl = 'https://dev.virtualearth.net/REST/v1/Autosuggest?query=' + encodeURIComponent(hotelName) + '&maxResults=5&key=' + bingMapsKey;
+
+        fetch(requestUrl)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.resourceSets && data.resourceSets[0] && data.resourceSets[0].resources) {
+              displayHotelNameSuggestions(data.resourceSets[0].resources[0].value);
+            }
+          });
+      } else {
+        document.getElementById('hotel-name-suggestions').innerHTML = '';
+      }
+    }
+
+    function getCoordinatesForHotel(hotelName) {
+      var url = 'https://dev.virtualearth.net/REST/v1/Locations?q=' + encodeURIComponent(hotelName) + '&key=Aj3FRa0xCnDa-nApre6YJSYnFPZU270tWHtgyrOeJ7oCpa_tGccKmPXMiEHULED8';
+
+      return fetch(url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          var coordinates;
+
+          if (data.resourceSets && data.resourceSets.length > 0 && data.resourceSets[0].resources && data.resourceSets[0].resources.length > 0) {
+            var resource = data.resourceSets[0].resources[0];
+
+            if (resource.geocodePoints && resource.geocodePoints.length > 0 && resource.geocodePoints[0].coordinates) {
+              coordinates = {
+                latitude: resource.geocodePoints[0].coordinates[0],
+                longitude: resource.geocodePoints[0].coordinates[1]
+              };
+            }
+          }
+
+          if (coordinates) {
+            return Promise.resolve(coordinates);
+          } else {
+            return Promise.reject('Coordinates not found');
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          return Promise.reject(error);
+        });
+    }
 
 
-                //Create a ClusterLayer and add it to the map.
-                clusterLayer = new Microsoft.Maps.ClusterLayer(pushpins);
-                map.layers.insert(clusterLayer);
-            });
+    function displayHotelNameSuggestions(suggestions) {
+      var hotelNameSuggestionsDiv = document.getElementById('hotel-name-suggestions');
+      hotelNameSuggestionsDiv.innerHTML = '';
+
+      if (suggestions.length === 0) {
+        hotelNameSuggestionsDiv.classList.add('hidden');
+      } else {
+        hotelNameSuggestionsDiv.classList.remove('hidden');
+      }
+
+      suggestions.forEach(function (suggestion) {
+        var suggestionDiv = document.createElement('div');
+        suggestionDiv.className = 'hotel-suggestion';
+
+        if (suggestion.address && suggestion.address.locality && suggestion.address.countryRegion) {
+          var flagUrl = 'https://flagcdn.com/16x12/' + suggestion.address.countryRegionIso2.toLowerCase() + '.png';
+          var flagImg = document.createElement('img');
+          flagImg.src = flagUrl;
+          flagImg.alt = suggestion.address.countryRegion;
+          flagImg.style.marginRight = '5px';
+          suggestionDiv.appendChild(flagImg);
+
+          suggestionDiv.setAttribute('data-city', suggestion.address.locality);
+          suggestionDiv.setAttribute('data-country', suggestion.address.countryRegion);
+
         }
 
+        var hotelName = document.createElement('span');
+        hotelName.innerText = suggestion.name;
+        suggestionDiv.appendChild(hotelName);
 
-    </script>
-    <h1>Hello World</h1>
-    <p>I'm hosted with GitHub Pages.</p>
-    <div id="myMap" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+        suggestionDiv.addEventListener('click', function () {
+          document.getElementById('hotel-name').value = suggestion.name;
+          document.getElementById('city').value = this.getAttribute('data-city') || '';
+            document.getElementById('country').value = this.getAttribute('data-country') || '';
+          getCoordinatesForHotel(suggestion.name).then(function (data) {
+            document.getElementById('latitude').value = data.latitude || '';
+            document.getElementById('longitude').value = data.longitude || '';
+          })
+            .catch(function (error) {
+              console.log(error);
 
-    <div class="hover-panel">
-        <h3>Create Location Data</h3>
-        <form id="updateForm">
-          <div class="form-group">
-            <label for="hotel-name">Hotel Name:</label>
-            <input type="text" id="hotel-name" name="hotel_name" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="start-date">Start Date:</label>
-            <input type="month" id="start-date" name="startdate" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="country">Country:</label>
-            <input type="text" id="country" name="country" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="latitude">Latitude:</label>
-            <input type="number" step="0.00000001" id="latitude" name="latitude" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="longitude">Longitude:</label>
-            <input type="number" step="0.00000001" id="longitude" name="longitude" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="country-color">Country Color:</label>
-            <input type="text" id="country-color" name="countrycolor" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-          </div>
-      
-          <div class="form-group">
-            <label for="amenities">Amenities:</label>
-            <textarea id="amenities" name="amenities" required></textarea>
-          </div>
-      
-          <div class="form-group">
-            <label for="reviews">Reviews:</label>
-            <textarea id="reviews" name="reviews" required></textarea>
-          </div>
-      
-          <div class="form-group">
-            <label for="star-rating">Star Rating:</label>
-            <input type="number" step="0.1" id="star-rating" name="star_rating" required>
-          </div>
-      
-          <div class="form-group">
-            <label for="guid">GUID:</label>
-            <input type="text" id="guid" name="guid" required>
-          </div>
-      
-          <button type="submit">Update</button>
-        </form>
+            });
+          hotelNameSuggestionsDiv.innerHTML = '';
+        });
+
+        hotelNameSuggestionsDiv.appendChild(suggestionDiv);
+      });
+    }
+
+
+
+  </script>
+  <h1>Hello World</h1>
+  <p>I'm hosted with GitHub Pages.</p>
+  <div id="myMap" style="position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+
+  <button id="toggle-panel-btn" class="toggle-panel-btn">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <div class="hover-panel">
+    <h3>Create Location Data</h3>
+    <form id="updateForm" class="form-container">
+      <div class="form-group">
+        <label for="hotel-name"><i class="fas fa-hotel"></i> Hotel Name:</label>
+        <div style="position:relative;">
+          <input type="text" id="hotel-name" name="hotel_name" required onkeyup="getHotelNameSuggestions()">
+          <div id="hotel-name-suggestions"></div>
+        </div>
       </div>
-      
+
+      <input type="hidden" id="latitude" name="latitude">
+      <input type="hidden" id="longitude" name="longitude">
+
+      </br>
+      <div class="form-group">
+        <label for="city"><i class="fas fa-map-marker-alt"></i> City:</label>
+        <input type="text" id="city" name="city" required>
+      </div>
+
+      <div class="form-group">
+        <label for="country"><i class="fas fa-globe"></i> Country:</label>
+        <input type="text" id="country" name="country" required>
+      </div>
+      <div class="form-group">
+        <label for="start-date"><i class="fas fa-calendar-alt"></i> Start Date:</label>
+        <input type="month" id="startdate" name="startdate" required>
+      </div>
+      <div class="form-group">
+        <label for="description"><i class="fas fa-align-left"></i> Description:</label>
+        <textarea id="description" name="description" ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="amenities"><i class="fas fa-concierge-bell"></i> Amenities:</label>
+        <textarea id="amenities" name="amenities" ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="reviews"><i class="fas fa-comments"></i> Reviews:</label>
+        <textarea id="reviews" name="reviews" ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="star-rating"><i class="fas fa-star"></i> Star Rating:</label>
+        <input type="number" step="0.1" id="star_rating" name="star_rating" >
+      </div>
+      </br>
+      <button type="submit"><i class="fas fa-save"></i> Create</button>
+    </form>
+  </div>
+
 </body>
+<script>document.getElementById('toggle-panel-btn').addEventListener('click', function () {
+    var hoverPanel = document.querySelector('.hover-panel');
+    hoverPanel.classList.toggle('visible');
+  });
+</script>
 
 </html>
