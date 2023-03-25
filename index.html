@@ -58,7 +58,10 @@
             var infobox = new Microsoft.Maps.Infobox(e.target.getLocation(), {
               title: locationData.city,
               description: 'Date: ' + locationData.startdate + '<br>Country: ' + locationData.country,
-              htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '</div>',
+              htmlContent: '<div id="textdescription" style="background-color: ' + locationData.countrycolor + '; height: 100px; width: 100px;"> Date: ' + locationData.startdate + '<br>Country: ' + locationData.country + '<br><button class="delete-button" onclick="deleteLocation(\''+locationData.key+'\')"><i class="fas fa-trash"></i></button></div>',
+              showCloseButton: true,
+              maxWidth: 200,
+              maxHeight: 200,
               visible: true
             });
 
@@ -223,7 +226,9 @@
 
       <div class="form-group">
         <label for="country"><i class="fas fa-globe"></i> Country:</label>
-        <input type="text" id="country" name="country" required>
+        <div style="position:relative;">
+          <input type="text" id="country" name="country">
+        </div>
       </div>
       <div class="form-group">
         <label for="start-date"><i class="fas fa-calendar-alt"></i> Start Date:</label>

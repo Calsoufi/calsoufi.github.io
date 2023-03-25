@@ -1,6 +1,6 @@
 // main.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+import { getDatabase, ref, push, remove} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
 import { onValue, query } from 'https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js';
 window.togglePanel = togglePanel;
 
@@ -75,7 +75,10 @@ window.fetchData = function() {
       const placesArray = [];
   
       for (const key in data) {
-        placesArray.push(data[key]);
+        placesArray.push({
+          key: key,
+          ...data[key]
+        });
       }
   
       fetchAndDisplayData(placesArray);
@@ -98,3 +101,21 @@ function fetchAndDisplayData(places) {
       panel.style.transform = "scale(1)";
     }
   }
+
+  window.deleteLocation = function (key) {
+    if (confirm("Are you sure you want to delete this location?")) {
+      const locationRef = ref(db, `places/${key}`);
+      remove(locationRef)
+        .then(() => {
+          console.log("Location deleted successfully.");
+          alert("Location deleted successfully!");
+          fetchData();
+        })
+        .catch((error) => {
+          console.error("Error deleting location: ", error);
+          alert("Failed to delete location.");
+        });
+    }
+}
+
+  

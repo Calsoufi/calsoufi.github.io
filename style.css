@@ -1,20 +1,42 @@
 #textdescription {
-    font-family: Calibri, sans-serif;
-    font-weight: bold;
-    color: white;
-    background-color: #333;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 20px;
-    shape-outside: circle(); /* set shape to circle */
-    clip-path: circle(); /* set clip path to circle */
-  }
-  
+  font-family: Calibri, sans-serif;
+  font-weight: bold;
+  color: white;
+  background-color: #333;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 20px;
+  shape-outside: circle(); /* set shape to circle */
+  clip-path: circle(); /* set clip path to circle */
+  position: relative; /* position relative to contain the delete button */
+}
+
+#textdescription .delete-button {
+  font-weight: bold;
+  position: absolute;
+  top: 5px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#textdescription .delete-button:hover {
+  background-color: red;
+}
+
+#textdescription .details {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+}
 
 /* Set the font family to Roboto */
 body {
@@ -44,6 +66,11 @@ body {
    opacity: 0;
    transition: opacity 0.3s ease-in-out;
 }
+
+
+
+
+
 .hover-panel.visible {
   /* set the state to visible when the 'visible' class is added */
   display: block;
