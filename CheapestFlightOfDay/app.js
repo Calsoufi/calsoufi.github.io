@@ -9,6 +9,8 @@ document.getElementById("airport-form").addEventListener("submit", (event) => {
     const today = new Date().toISOString().split("T")[0];
     const apiUrl = `https://api.duffel.com/air/offers?origin=${originAirportIata}&departure_date=${today}`;
     
+
+    
     try {
       const response = await fetch(apiUrl, {
         method: 'GET',
