@@ -15,7 +15,7 @@ document.getElementById("airport-form").addEventListener("submit", (event) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Duffel-Version': 'beta',
+          'Duffel-Version': '1.0.0',
           'Authorization': `Bearer duffel_test_MkMm0lKf_DFDeJfEUleAlHw-dVWWHbMB2BqPwv1LTgn`,
         },
       });
