@@ -1,53 +1,29 @@
-function onSuccess(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    getNearestAirport(latitude, longitude);
-  }
+document.getElementById("airport-form").addEventListener("submit", (event) => {
+    event.preventDefault();
   
-  function onError(error) {
-    console.error("Error fetching location:", error);
-    document.getElementById("nearest-airport").textContent = "Error fetching location";
-  }
+    const airportIata = document.getElementById("airport-input").value;
+    getCheapestFlight(airportIata);
+  });
   
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  } else {
-    document.getElementById("nearest-airport").textContent = "Geolocation not supported";
-  }
-  
-  async function getNearestAirport(latitude, longitude) {
-    const url = `https://opensky-network.org/api/airports?lat=${latitude}&lng=${longitude}&radius=100`;
-  
-    try {
-      const response = await fetch(url);
-      const airports = await response.json();
-  
-      if (airports && airports.length > 0) {
-        const nearestAirport = airports[0];
-        document.getElementById("nearest-airport").textContent = `Nearest airport: ${nearestAirport.name}, (${nearestAirport.iata})`;
-        getCheapestFlight(nearestAirport.iata);
-      } else {
-        document.getElementById("nearest-airport").textContent = "No airports found nearby";
-      }
-    } catch (error) {
-      console.error("Error fetching airport data:", error);
-      document.getElementById("nearest-airport").textContent = "Error fetching airport data";
-    }
-  }
-  
-
   async function getCheapestFlight(originAirportIata) {
     const today = new Date().toISOString().split("T")[0];
-    const tomorrow = new Date(Date.now() + 86400000).toISOString().split("T")[0];
-    const url = `https://api.skypicker.com/flights?fly_from=${originAirportIata}&date_from=${today}&date_to=${tomorrow}&partner=bxGuSk0emsu98ICPnP77JtPu-HIBHE7z`;
-  
+    const apiUrl = `https://api.duffel.com/air/offers?origin=${originAirportIata}&departure_date=${today}`;
+    
     try {
-      const response = await fetch(url);
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Duffel-Version': 'beta',
+          'Authorization': `Bearer duffel_test_MkMm0lKf_DFDeJfEUleAlHw-dVWWHbMB2BqPwv1LTgn`,
+        },
+      });
       const data = await response.json();
   
       if (data.data && data.data.length > 0) {
-        const cheapestFlight = data.data.reduce((min, flight) => (flight.price < min.price ? flight : min), data.data[0]);
-        document.getElementById("cheapest-flight").textContent = `Cheapest flight: ${originAirportIata} to ${cheapestFlight.flyTo} (${cheapestFlight.cityTo}) - $${cheapestFlight.price}`;
+        const cheapestFlight = data.data.reduce((min, flight) => (flight.price.total_amount < min.price.total_amount ? flight : min), data.data[0]);
+        document.getElementById("cheapest-flight").textContent = `Cheapest flight: ${originAirportIata} to ${cheapestFlight.destination} (${cheapestFlight.destination}) - $${cheapestFlight.price.total_amount}`;
       } else {
         document.getElementById("cheapest-flight").textContent = "No flights found";
       }
@@ -56,4 +32,5 @@ function onSuccess(position) {
       document.getElementById("cheapest-flight").textContent = "Error fetching flight data";
     }
   }
+  
   

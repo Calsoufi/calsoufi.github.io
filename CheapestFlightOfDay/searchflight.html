@@ -18,7 +18,12 @@
           <h2 class="card-title">Nearest Airport</h2>
         </div>
         <div class="card-body">
-          <p id="nearest-airport">Fetching your nearest airport...</p>
+              <form id="airport-form">
+                <label for="airport-input">Enter Airport IATA Code:</label>
+                <input type="text" id="airport-input" required>
+                <button type="submit">Find Cheapest Flight</button>
+              </form>
+              <p id="cheapest-flight"></p>
         </div>
       </div>
   
