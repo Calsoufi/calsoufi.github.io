@@ -1,0 +1,56 @@
+.offer-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  position: relative; /* Add a position to the offer card */
+  transition: all 0.3s ease-in-out; /* Add a transition effect */
+}
+
+.offer-card:hover,
+.offer-card.selected {
+  border-color: green;
+  border-width: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px); /* Elevate the card */
+}
+
+.offer-card.selected .selected-button {
+  background-color: green;
+  color: white;
+}
+
+.selected-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid green;
+  color: green;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.selected-button:hover {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+#passenger-details-form {
+  display: none;
+  margin-top: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+#passenger-details-form input {
+  margin-bottom: 10px;
+}
+
+#passenger-details-form button {
+  margin-top: 10px;
+}
